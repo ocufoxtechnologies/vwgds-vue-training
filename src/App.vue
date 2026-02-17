@@ -1,54 +1,80 @@
 <template>
-  <div>
-    <p>
-      Counter :
-      <!-- <span v-if="counter > 10" class="text-green">{{ counter }}</span>
-      <span v-else-if="counter > 5" class="text-orange">{{ counter }}</span>
-      <span v-else class="text-red">{{ counter }}</span> -->
+  <div class="m-4">
+    <div class="flex space-x-10 items-center">
+      <h1 class="text-xl">Task Tracker</h1>
+      <button @click="showForm = true" v-if="!showForm">Add</button>
+    </div>
 
-      <span
-        v-bind:class="{
-          'text-green': counter > 10,
-          'text-orange': counter > 5 && counter < 10,
-          'text-red': counter < 5,
-        }"
-        >{{ counter }}</span
-      >
-    </p>
+    <AddTask @addTask="handleAddTask" @closeForm="closeForm" v-if="showForm" />
 
-    <button v-if="counter > 0" v-on:click="counter--">Decrement</button>
-    <button @click="counter++">Increment</button>
+    <ul class="px-4 my-5 space-y-4">
+      <Task
+        :key="task.name"
+        v-for="(task, index) in tasks"
+        v-bind="task"
+        @delete="deleteTask(index)"
+        @start="startTask(task)"
+      />
+    </ul>
   </div>
 </template>
 
 <script>
+import AddTask from "./component/AddTask.vue";
+
 export default {
+  components: {
+    AddTask,
+  },
   data() {
+    const time = new Date();
+    time.setTime(1771311155295);
     return {
       counter: 0,
+      tasks: [
+        {
+          name: "Learn Vue",
+          startTime: time,
+          endTime: null,
+        },
+        {
+          name: "Learn React",
+          startTime: null,
+          endTime: null,
+        },
+        {
+          name: "Learn Angular",
+          startTime: null,
+          endTime: null,
+        },
+      ],
+      showForm: false,
     };
+  },
+  methods: {
+    closeForm() {
+      this.showForm = false;
+    },
+    handleAddTask(taskName) {
+      this.tasks.push({
+        name: taskName,
+      });
+      this.closeForm();
+    },
+    deleteTask(index) {
+      this.tasks.splice(index, 1);
+    },
+    startTask(task) {
+      task.startTime = new Date();
+    },
   },
 };
 </script>
 
 <style>
-p {
-  font-size: 1.5rem;
-}
-
-.text-green {
-  color: green;
-}
-
-.text-orange {
-  color: orange;
-}
-
-.text-red {
-  color: red;
-}
+@reference "./assets/main.css";
 
 button {
-  margin: 8px;
+  @apply border rounded-sm px-4 py-1 cursor-pointer;
 }
 </style>
