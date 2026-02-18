@@ -2,7 +2,7 @@
   <div class="m-4">
     <div class="flex space-x-10 items-center">
       <h1 class="text-xl">Task Tracker</h1>
-      <button @click="showForm = true" v-if="!showForm">Add</button>
+      <button @click="openForm" v-if="!showForm">Add</button>
     </div>
 
     <AddTask @addTask="handleAddTask" @closeForm="closeForm" v-if="showForm" />
@@ -19,55 +19,40 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import AddTask from "./component/AddTask.vue";
+import { ref } from "vue";
+import useAddTask from "./composables/useAddTask";
 
-export default {
-  components: {
-    AddTask,
+const time = new Date();
+time.setTime(1771311155295);
+
+const tasks = ref([
+  {
+    name: "Learn Vue",
+    startTime: time,
+    endTime: null,
   },
-  data() {
-    const time = new Date();
-    time.setTime(1771311155295);
-    return {
-      counter: 0,
-      tasks: [
-        {
-          name: "Learn Vue",
-          startTime: time,
-          endTime: null,
-        },
-        {
-          name: "Learn React",
-          startTime: null,
-          endTime: null,
-        },
-        {
-          name: "Learn Angular",
-          startTime: null,
-          endTime: null,
-        },
-      ],
-      showForm: false,
-    };
+  {
+    name: "Learn React",
+    startTime: null,
+    endTime: null,
   },
-  methods: {
-    closeForm() {
-      this.showForm = false;
-    },
-    handleAddTask(taskName) {
-      this.tasks.push({
-        name: taskName,
-      });
-      this.closeForm();
-    },
-    deleteTask(index) {
-      this.tasks.splice(index, 1);
-    },
-    startTask(task) {
-      task.startTime = new Date();
-    },
+  {
+    name: "Learn Angular",
+    startTime: null,
+    endTime: null,
   },
+]);
+
+const { closeForm, openForm, handleAddTask, showForm } = useAddTask(tasks);
+
+const deleteTask = (index) => {
+  tasks.value.splice(index, 1);
+};
+
+const startTask = (task) => {
+  task.startTime = new Date();
 };
 </script>
 
