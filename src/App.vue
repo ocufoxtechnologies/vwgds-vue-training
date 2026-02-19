@@ -5,9 +5,7 @@
     </div>
 
     <div class="flex-1 py-4 px-6">
-      <Transition name="fade" mode="out-in" appear>
-        <component :is="currentPageComponent" />
-      </Transition>
+      <component :is="currentPageComponent" />
     </div>
   </div>
 </template>

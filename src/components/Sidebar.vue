@@ -17,7 +17,5 @@
 <script setup>
 import useNavigation from "@/composables/useNavigation";
 
-const emit = defineEmits(["changePage"]);
-
 const { navigate, menus } = useNavigation();
 </script>
