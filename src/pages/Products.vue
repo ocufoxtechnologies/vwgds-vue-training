@@ -8,19 +8,23 @@
     <AddProduct v-if="showAddForm" />
 
     <table class="w-full">
-      <tr>
-        <th>Name</th>
-        <th>Category</th>
-        <th>Brand</th>
-        <th>Description</th>
-      </tr>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Brand</th>
+          <th>Description</th>
+        </tr>
+      </thead>
 
-      <tr v-for="product in products">
-        <td>{{ product.name }}</td>
-        <td>{{ product.category }}</td>
-        <td>{{ product.brand }}</td>
-        <td>{{ product.description }}</td>
-      </tr>
+      <tbody>
+        <tr v-for="product in products">
+          <td>{{ product.name }}</td>
+          <td>{{ product.category }}</td>
+          <td>{{ product.brand }}</td>
+          <td>{{ product.description }}</td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </template>

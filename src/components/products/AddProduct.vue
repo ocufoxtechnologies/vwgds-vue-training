@@ -5,13 +5,8 @@
     >
       <div class="bg-white px-6 py-4 rounded-md">
         <p class="text-lg font-medium mb-4">Add Product</p>
-        <!-- {{ person }} -->
+        {{ product }}
         <form action="#">
-          <!-- <BaseNameInput
-            v-model:fname="person.fname"
-            v-model:lname="person.lname"
-          /> -->
-
           <BaseInput
             label="Name"
             id="name"
@@ -25,11 +20,11 @@
               class="border border-slate-300 rounded-sm flex-1 px-2 py-1"
               name="category"
               id="category"
-              v-model="product.category"
+              v-model="product.category_id"
             >
-              <option value="Electronics">Electronics</option>
-              <option value="Food">Food</option>
-              <option value="Healthcare">Healthcare</option>
+              <option v-for="category in categories" :value="category.id">
+                {{ category.name }}
+              </option>
             </select>
           </div>
 
@@ -39,11 +34,11 @@
               class="border border-slate-300 rounded-sm flex-1 px-2 py-1"
               name="brand"
               id="brand"
-              v-model="product.brand"
+              v-model="product.brand_id"
             >
-              <option value="Redragon">Redragon</option>
-              <option value="Logitech">Logitech</option>
-              <option value="Noise">Noise</option>
+              <option v-for="brand in brands" :value="brand.id">
+                {{ brand.name }}
+              </option>
             </select>
           </div>
 
@@ -90,9 +85,15 @@
 </template>
 
 <script setup>
-import { provide, ref } from "vue";
-import BaseNameInput from "../base/BaseNameInput.vue";
+import useBrands from "@/composables/useBrands";
+import useCategories from "@/composables/useCategories";
+import { computed, ref } from "vue";
+
+const { categories } = useCategories();
+
 const product = ref({});
 
-const person = ref({});
+const { getBrandByCategory } = useBrands();
+
+const brands = computed(() => getBrandByCategory(product.value.category_id));
 </script>
