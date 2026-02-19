@@ -5,18 +5,19 @@
     >
       <div class="bg-white px-6 py-4 rounded-md">
         <p class="text-lg font-medium mb-4">Add Product</p>
-        {{ product }}
+        <!-- {{ person }} -->
         <form action="#">
-          <div class="space-x-4 my-4 flex">
-            <label class="w-24" for="name">Name</label>
-            <input
-              v-model.lazy.trim="product.name"
-              type="text"
-              id="name"
-              class="flex-1 px-2 py-1 border border-slate-300 rounded-sm"
-              placeholder="Enter Name"
-            />
-          </div>
+          <!-- <BaseNameInput
+            v-model:fname="person.fname"
+            v-model:lname="person.lname"
+          /> -->
+
+          <BaseInput
+            label="Name"
+            id="name"
+            placeholder="Enter Name"
+            v-model="product.name"
+          />
 
           <div class="space-x-4 my-4 flex">
             <label class="w-24" for="category">Category</label>
@@ -90,5 +91,8 @@
 
 <script setup>
 import { provide, ref } from "vue";
+import BaseNameInput from "../base/BaseNameInput.vue";
 const product = ref({});
+
+const person = ref({});
 </script>
