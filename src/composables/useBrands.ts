@@ -15,7 +15,7 @@ const brands = ref<Brand[]>([
   },
   {
     id: 2,
-    name: "Noise",
+    name: "Redragon",
     category_ids: [2],
   },
   {

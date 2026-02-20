@@ -36,48 +36,40 @@
       </tbody>
     </table> -->
 
-    <BaseTable
-      :headers="[
-        'Name',
-        'Brand',
-        'Category',
-        'Refurbished?',
-        'Description',
-        'Actions',
-      ]"
-    >
-      <template #header="">
-        <thead>
-          <tr>
-            <th
-              v-for="header in [
-                'Name',
-                'Brand',
-                'Category',
-                'Refurbished?',
-                'Description',
-              ]"
-            >
-              {{ header }}
-            </th>
-          </tr>
-        </thead>
+    <BaseTable :data="products" :config="tableConfig">
+      <template #col-header-start>
+        <th><p class="text-red-800">#</p></th>
+      </template>
+      <template #col-header-end>
+        <th><p class="text-red-800">Actions</p></th>
+      </template>
+      <template #col-data-start="{ rowIndex }">
+        <th>
+          <p class="px-2">{{ rowIndex + 1 }}</p>
+        </th>
       </template>
 
-      <template v-slot="">
-        <tbody>
-          <tr v-for="product in products">
-            <td>{{ product.name }}</td>
-            <td>{{ product.category.name }}</td>
-            <td>{{ product.brand.name }}</td>
-            <td>{{ product.canBeRefurbished ? "Yes" : "No" }}</td>
-            <td>{{ product.description }}</td>
-            <td>
-              <IconDelete class="text-red-400 text-xs text-right" />
-            </td>
-          </tr>
-        </tbody>
+      <template #col-data-2="{ value, rowData, rowIndex }">
+        <span>{{ value.name }}</span>
       </template>
+
+      <template #col-data-end>
+        <td>
+          <IconDelete class="text-red-400 text-xs text-right" />
+        </td>
+      </template>
+      <!-- <template v-slot="">
+        <tr v-for="product in products">
+          <td>{{ product.name }}</td>
+          <td>{{ product.category.name }}</td>
+          <td>{{ product.brand.name }}</td>
+          <td>{{ product.canBeRefurbished ? "Yes" : "No" }}</td>
+          <td>{{ product.description }}</td>
+          <td>
+            <IconDelete class="text-red-400 text-xs text-right" />
+          </td>
+        </tr>
+      </template> -->
     </BaseTable>
   </div>
 </template>
@@ -91,6 +83,28 @@ import { ref } from "vue";
 const { addProduct, products } = useProducts();
 
 const showAddForm = ref(false);
+const tableConfig = ref([
+  {
+    header: "Name",
+    key: "name",
+  },
+  {
+    header: "Brand",
+    key: "brand",
+  },
+  {
+    header: "Category",
+    key: "category",
+  },
+  {
+    header: "Refurbished?",
+    key: "canBeRefurbished",
+  },
+  {
+    header: "Description",
+    key: "description",
+  },
+]);
 </script>
 
 <style scoped>

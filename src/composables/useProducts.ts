@@ -17,7 +17,7 @@ const products = ref<Product[]>([
     id: 1,
     name: "Redragon Shiva Mechinical Keyboard",
     category_id: 1,
-    brand_id: 1,
+    brand_id: 2,
     description: "Mechnical Keyboard 80%",
     canBeRefurbished: true,
   },
