@@ -14,28 +14,6 @@
       v-if="showAddForm"
     />
 
-    <!-- <table class="w-full">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Category</th>
-          <th>Brand</th>
-          <th>Refurbished?</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <tr v-for="product in products">
-          <td>{{ product.name }}</td>
-          <td>{{ product.category.name }}</td>
-          <td>{{ product.brand.name }}</td>
-          <td>{{ product.canBeRefurbished ? "Yes" : "No" }}</td>
-          <td>{{ product.description }}</td>
-        </tr>
-      </tbody>
-    </table> -->
-
     <BaseTable :data="products" :config="tableConfig">
       <template #col-header-start>
         <th><p class="text-red-800">#</p></th>
@@ -53,23 +31,22 @@
         <span>{{ value.name }}</span>
       </template>
 
-      <template #col-data-end>
+      <template #col-data-3="{ value, rowData, rowIndex }">
+        <span>{{ value.name }}</span>
+      </template>
+
+      <template #col-data-4="{ value, rowData, rowIndex }">
+        <span>{{ value ? "Yes" : "No" }}</span>
+      </template>
+
+      <template #col-data-end="{ rowIndex, rowData }">
         <td>
-          <IconDelete class="text-red-400 text-xs text-right" />
+          <IconDelete
+            @click="deleteProduct(rowIndex)"
+            class="cursor-pointer text-red-400 text-xs text-right"
+          />
         </td>
       </template>
-      <!-- <template v-slot="">
-        <tr v-for="product in products">
-          <td>{{ product.name }}</td>
-          <td>{{ product.category.name }}</td>
-          <td>{{ product.brand.name }}</td>
-          <td>{{ product.canBeRefurbished ? "Yes" : "No" }}</td>
-          <td>{{ product.description }}</td>
-          <td>
-            <IconDelete class="text-red-400 text-xs text-right" />
-          </td>
-        </tr>
-      </template> -->
     </BaseTable>
   </div>
 </template>
@@ -80,7 +57,7 @@ import AddProduct from "@/components/products/AddProduct.vue";
 import useProducts from "@/composables/useProducts";
 import { ref } from "vue";
 
-const { addProduct, products } = useProducts();
+const { addProduct, products, deleteProduct } = useProducts();
 
 const showAddForm = ref(false);
 const tableConfig = ref([

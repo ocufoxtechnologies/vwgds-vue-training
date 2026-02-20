@@ -22,6 +22,10 @@ const batches = ref<Batch[]>([
 
 const { getProductById } = useProducts();
 
+const deleteBatch = (index) => {
+  batches.value.splice(index, 1);
+};
+
 export default function () {
   return {
     batches: computed(() => {
@@ -32,5 +36,6 @@ export default function () {
         };
       });
     }),
+    deleteBatch,
   };
 }

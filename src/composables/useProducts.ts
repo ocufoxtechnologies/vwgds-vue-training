@@ -36,6 +36,10 @@ export default function () {
     return products.value.find((product) => product.id == id);
   };
 
+  const deleteProduct = (index) => {
+    products.value.splice(index, 1);
+  };
+
   return {
     products: computed(() =>
       products.value.map((p) => {
@@ -48,5 +52,6 @@ export default function () {
     ),
     addProduct,
     getProductById,
+    deleteProduct,
   };
 }

@@ -26,7 +26,7 @@
               {{ rowData[obj.key] }}
             </slot>
           </td>
-          <slot name="col-data-end"></slot>
+          <slot name="col-data-end" v-bind="{ rowIndex, rowData }"></slot>
         </tr>
       </slot>
     </tbody>
