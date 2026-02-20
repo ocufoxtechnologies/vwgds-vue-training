@@ -1,7 +1,8 @@
+import { ID } from "@/types";
 import { computed, ref } from "vue";
 
 export interface Category {
-  id: string | number;
+  id: ID;
   name: string;
 }
 
@@ -25,7 +26,12 @@ const categories = ref<Category[]>([
 ]);
 
 export default function () {
+  const getCategoryById = (id) => {
+    return categories.value.find((category) => category.id == id);
+  };
+
   return {
     categories: computed(() => categories.value),
+    getCategoryById,
   };
 }

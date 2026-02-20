@@ -5,14 +5,22 @@
       <button @click="showAddForm = !showAddForm">+</button>
     </div>
 
-    <AddProduct v-if="showAddForm" />
+    <AddProduct
+      @add="
+        addProduct($event);
+        showAddForm = false;
+      "
+      @cancel="showAddForm = false"
+      v-if="showAddForm"
+    />
 
-    <table class="w-full">
+    <!-- <table class="w-full">
       <thead>
         <tr>
           <th>Name</th>
           <th>Category</th>
           <th>Brand</th>
+          <th>Refurbished?</th>
           <th>Description</th>
         </tr>
       </thead>
@@ -20,36 +28,69 @@
       <tbody>
         <tr v-for="product in products">
           <td>{{ product.name }}</td>
-          <td>{{ product.category }}</td>
-          <td>{{ product.brand }}</td>
+          <td>{{ product.category.name }}</td>
+          <td>{{ product.brand.name }}</td>
+          <td>{{ product.canBeRefurbished ? "Yes" : "No" }}</td>
           <td>{{ product.description }}</td>
         </tr>
       </tbody>
-    </table>
+    </table> -->
+
+    <BaseTable
+      :headers="[
+        'Name',
+        'Brand',
+        'Category',
+        'Refurbished?',
+        'Description',
+        'Actions',
+      ]"
+    >
+      <template #header="">
+        <thead>
+          <tr>
+            <th
+              v-for="header in [
+                'Name',
+                'Brand',
+                'Category',
+                'Refurbished?',
+                'Description',
+              ]"
+            >
+              {{ header }}
+            </th>
+          </tr>
+        </thead>
+      </template>
+
+      <template v-slot="">
+        <tbody>
+          <tr v-for="product in products">
+            <td>{{ product.name }}</td>
+            <td>{{ product.category.name }}</td>
+            <td>{{ product.brand.name }}</td>
+            <td>{{ product.canBeRefurbished ? "Yes" : "No" }}</td>
+            <td>{{ product.description }}</td>
+            <td>
+              <IconDelete class="text-red-400 text-xs text-right" />
+            </td>
+          </tr>
+        </tbody>
+      </template>
+    </BaseTable>
   </div>
 </template>
 
 <script setup lang="ts">
+import IconDelete from "@/components/icons/IconDelete.vue";
 import AddProduct from "@/components/products/AddProduct.vue";
+import useProducts from "@/composables/useProducts";
 import { ref } from "vue";
 
-interface Product {
-  name: string;
-  category: string;
-  brand: string;
-  description: string;
-}
+const { addProduct, products } = useProducts();
 
-const products = ref<Product[]>([
-  {
-    name: "Redragon Shiva Mechinical Keyboard",
-    category: "Electronics",
-    brand: "Redragon",
-    description: "Mechnical Keyboard 80%",
-  },
-]);
-
-const showAddForm = ref(true);
+const showAddForm = ref(false);
 </script>
 
 <style scoped>

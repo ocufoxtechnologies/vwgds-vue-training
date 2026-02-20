@@ -1,9 +1,10 @@
+import { ID } from "@/types";
 import { computed, ref } from "vue";
 
 interface Brand {
-  id: string | number;
+  id: ID;
   name: string;
-  category_ids: Array<string | number>;
+  category_ids: Array<ID>;
 }
 
 const brands = ref<Brand[]>([
@@ -24,7 +25,7 @@ const brands = ref<Brand[]>([
   },
 ]);
 
-export default function (category_id) {
+export default function (category_id = null) {
   console.log(category_id);
 
   const getBrandByCategory = (category_id) => {
@@ -35,7 +36,12 @@ export default function (category_id) {
     );
   };
 
+  const getBrandById = (id) => {
+    return brands.value.find((b) => b.id == id);
+  };
+
   return {
     getBrandByCategory,
+    getBrandById,
   };
 }

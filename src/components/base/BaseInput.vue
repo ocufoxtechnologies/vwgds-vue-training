@@ -1,6 +1,10 @@
 <template>
   <div class="space-x-4 my-4 flex">
-    <label class="w-24" :for="id">{{ label }}</label>
+    <label class="w-24" :for="id">
+      <slot
+        ><span>{{ label }}</span></slot
+      >
+    </label>
     <input
       type="text"
       :id="id"

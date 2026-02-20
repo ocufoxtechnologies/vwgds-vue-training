@@ -5,14 +5,17 @@
     >
       <div class="bg-white px-6 py-4 rounded-md">
         <p class="text-lg font-medium mb-4">Add Product</p>
-        {{ product }}
-        <form action="#">
+
+        <form @submit.prevent="emit('add', product)" action="#">
           <BaseInput
             label="Name"
             id="name"
             placeholder="Enter Name"
             v-model="product.name"
-          />
+            required
+          >
+            <p class="text-3xl">Name</p>
+          </BaseInput>
 
           <div class="space-x-4 my-4 flex">
             <label class="w-24" for="category">Category</label>
@@ -78,6 +81,16 @@
               </div>
             </div>
           </div>
+
+          <div class="flex justify-between">
+            <button
+              @click.prevent="emit('cancel')"
+              class="bg-red-600 text-white"
+            >
+              Cancel
+            </button>
+            <button class="bg-green-600 text-white">Add</button>
+          </div>
         </form>
       </div>
     </div>
@@ -88,6 +101,8 @@
 import useBrands from "@/composables/useBrands";
 import useCategories from "@/composables/useCategories";
 import { computed, ref } from "vue";
+
+const emit = defineEmits(["cancel", "add"]);
 
 const { categories } = useCategories();
 
