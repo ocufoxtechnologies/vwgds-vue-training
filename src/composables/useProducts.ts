@@ -1,6 +1,6 @@
 import { ref, computed } from "vue";
-import useBrands from "./useBrands";
-import useCategories from "./useCategories";
+import { getBrandById } from "./useBrands";
+import { getCategoryById } from "./useCategories";
 import { ID } from "@/types";
 
 interface Product {
@@ -22,9 +22,6 @@ const products = ref<Product[]>([
     canBeRefurbished: true,
   },
 ]);
-
-const { getBrandById } = useBrands();
-const { getCategoryById } = useCategories();
 
 export default function () {
   const addProduct = (product) => {

@@ -108,7 +108,5 @@ const { categories } = useCategories();
 
 const product = ref({});
 
-const { getBrandByCategory } = useBrands();
-
-const brands = computed(() => getBrandByCategory(product.value.category_id));
+const brands = useBrands(product);
 </script>

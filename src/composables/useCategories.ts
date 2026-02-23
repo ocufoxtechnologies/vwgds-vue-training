@@ -25,13 +25,12 @@ const categories = ref<Category[]>([
   },
 ]);
 
-export default function () {
-  const getCategoryById = (id) => {
-    return categories.value.find((category) => category.id == id);
-  };
+export const getCategoryById = (id) => {
+  return categories.value.find((category) => category.id == id);
+};
 
+export default function () {
   return {
     categories: computed(() => categories.value),
-    getCategoryById,
   };
 }

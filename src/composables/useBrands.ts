@@ -25,23 +25,17 @@ const brands = ref<Brand[]>([
   },
 ]);
 
-export default function (category_id = null) {
-  console.log(category_id);
+export const getBrandById = (id) => {
+  return brands.value.find((b) => b.id == id);
+};
 
-  const getBrandByCategory = (category_id) => {
-    if (category_id == null) return brands.value;
+export default function (product) {
+  return computed(() => {
+    console.log("useBrands Computed called");
+    if (product.value.category_id == null) return brands.value;
 
     return brands.value.filter((brand) =>
-      brand.category_ids.includes(category_id),
+      brand.category_ids.includes(product.value.category_id),
     );
-  };
-
-  const getBrandById = (id) => {
-    return brands.value.find((b) => b.id == id);
-  };
-
-  return {
-    getBrandByCategory,
-    getBrandById,
-  };
+  });
 }
