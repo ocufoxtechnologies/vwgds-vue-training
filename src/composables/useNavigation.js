@@ -4,30 +4,28 @@ import Batch from "@/pages/Batch.vue";
 import Inventory from "@/pages/Inventory.vue";
 import { computed, ref } from "vue";
 
-const menus = [
+export const menus = [
   {
     name: "Dashboard",
     component: Dashboard,
+    path: "/",
   },
   {
     name: "Products",
     component: Products,
+    path: "/products",
   },
   {
     name: "Batch",
     component: Batch,
+    path: "/batches",
   },
   {
     name: "Inventory",
     component: Inventory,
+    path: "/inventory",
   },
 ];
-
-const currentPage = ref("Dashboard");
-
-const currentPageComponent = computed(() => {
-  return menus.find((menu) => menu.name === currentPage.value).component;
-});
 
 export default function () {
   const navigate = (pageName) => {
@@ -36,8 +34,6 @@ export default function () {
 
   return {
     menus,
-    currentPage: computed(() => currentPage.value),
-    currentPageComponent,
     navigate,
   };
 }

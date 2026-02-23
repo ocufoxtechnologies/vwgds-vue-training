@@ -3,12 +3,10 @@
     <p class="text-2xl">Invento</p>
 
     <ul class="my-10 space-y-6 text-lg">
-      <li
-        class="cursor-pointer"
-        v-for="menu in menus"
-        @click="navigate(menu.name)"
-      >
-        {{ menu.name }}
+      <li class="cursor-pointer" v-for="menu in menus">
+        <router-link :to="{ name: menu.name }">
+          {{ menu.name }}
+        </router-link>
       </li>
     </ul>
   </div>

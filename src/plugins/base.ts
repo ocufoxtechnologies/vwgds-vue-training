@@ -3,8 +3,6 @@ import BaseTable from "@/components/base/BaseTable.vue";
 
 export default {
   install(app, options) {
-    console.log(options);
-
     if (options?.components == null) {
       app.component("BaseInput", BaseInput);
       app.component("BaseTable", BaseTable);

@@ -5,16 +5,18 @@
     </div>
 
     <div class="flex-1 py-4 px-6">
-      <component :is="currentPageComponent" />
+      <!-- <component :is="currentPageComponent" /> -->
+      <button @click="router.back()" class="float-right">Back</button>
+      <RouterView />
     </div>
   </div>
 </template>
 
 <script setup>
+import { useRouter } from "vue-router";
 import Sidebar from "./components/Sidebar.vue";
-import useNavigation from "./composables/useNavigation";
 
-const { currentPageComponent } = useNavigation();
+const router = useRouter();
 </script>
 
 <style>

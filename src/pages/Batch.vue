@@ -40,23 +40,11 @@
       </template>
 
       <template #col-data-2="{ value }">
-        <span>{{
-          value.toLocaleDateString("en-IN", {
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
-          })
-        }}</span>
+        <span v-date="{ value }"></span>
       </template>
 
       <template #col-data-3="{ value }">
-        <span>{{
-          value.toLocaleDateString("en-IN", {
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
-          })
-        }}</span>
+        <span v-date="{ value, formatString: 'dd/MM/yy' }"></span>
       </template>
 
       <template #col-data-end="{ rowIndex }">
