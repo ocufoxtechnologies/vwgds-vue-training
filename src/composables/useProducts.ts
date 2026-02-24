@@ -1,7 +1,8 @@
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { getBrandById } from "./useBrands";
 import { getCategoryById } from "./useCategories";
 import { ID } from "@/types";
+import axios from "axios";
 
 interface Product {
   id: ID;
@@ -12,18 +13,20 @@ interface Product {
   canBeRefurbished: boolean;
 }
 
-const products = ref<Product[]>([
-  {
-    id: 1,
-    name: "Redragon Shiva Mechinical Keyboard",
-    category_id: 1,
-    brand_id: 2,
-    description: "Mechnical Keyboard 80%",
-    canBeRefurbished: true,
-  },
-]);
+const products = ref<Product[]>([]);
+const isLoading = ref(false);
+
+const fetchProducts = async () => {
+  isLoading.value = true;
+  console.log("Fetchproducts called");
+  const response = await axios.get("http://localhost:3000/products");
+  products.value = response.data;
+  isLoading.value = false;
+};
 
 export default function () {
+  onMounted(fetchProducts);
+
   const addProduct = (product) => {
     product.id = new Date().getTime();
     products.value.push(product);
@@ -38,6 +41,7 @@ export default function () {
   };
 
   return {
+    isLoading: computed(() => isLoading.value),
     products: computed(() =>
       products.value.map((p) => {
         return {

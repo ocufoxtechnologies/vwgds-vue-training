@@ -3,24 +3,6 @@
     <div class="flex mb-6 items-center space-x-4">
       <h1>Batch</h1>
     </div>
-    <!-- <table class="w-full">
-      <thead>
-        <tr>
-          <th>Product</th>
-          <th>Manufacturing Date</th>
-          <th>Expiry Date</th>
-          <th>Price</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="b in batches">
-          <td>{{ b.product.name }}</td>
-          <td>{{ b.manufacturing_date }}</td>
-          <td>{{ b.expiry_date }}</td>
-          <td>{{ b.price }}</td>
-        </tr>
-      </tbody>
-    </table> -->
 
     <BaseTable :config="tableConfig" :data="batches">
       <template #col-header-start>

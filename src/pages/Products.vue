@@ -14,7 +14,7 @@
       v-if="showAddForm"
     />
 
-    <BaseTable :data="products" :config="tableConfig">
+    <BaseTable v-if="!isLoading" :data="products" :config="tableConfig">
       <template #col-header-start>
         <th><p class="text-red-800">#</p></th>
       </template>
@@ -48,6 +48,10 @@
         </td>
       </template>
     </BaseTable>
+
+    <div v-else>
+      <p class="text-3xl text-center">Loading</p>
+    </div>
   </div>
 </template>
 
@@ -57,7 +61,7 @@ import AddProduct from "@/components/products/AddProduct.vue";
 import useProducts from "@/composables/useProducts";
 import { ref } from "vue";
 
-const { addProduct, products, deleteProduct } = useProducts();
+const { addProduct, products, deleteProduct, isLoading } = useProducts();
 
 const showAddForm = ref(false);
 const tableConfig = ref([
