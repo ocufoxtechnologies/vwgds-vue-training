@@ -5,10 +5,13 @@ import baseComponentPlugin from "@/plugins/base";
 import IconDelete from "@/components/icons/IconDelete.vue";
 import vDate from "./directives/vDate";
 import { router } from "./router";
+import axios from "./plugins/axios";
 
 const vueApp = createApp(App);
 
 vueApp.use(router);
+
+vueApp.use(axios);
 
 vueApp.mount("#app");
 

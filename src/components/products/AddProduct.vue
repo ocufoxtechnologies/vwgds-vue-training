@@ -108,5 +108,5 @@ const { categories } = useCategories();
 
 const product = ref({});
 
-const brands = useBrands(product);
+const { brands } = useBrands(product);
 </script>
