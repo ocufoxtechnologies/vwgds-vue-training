@@ -100,7 +100,7 @@
 <script setup>
 import useBrands from "@/composables/useBrands";
 import useCategories from "@/composables/useCategories";
-import { computed, ref } from "vue";
+import { ref } from "vue";
 
 const emit = defineEmits(["cancel", "add"]);
 

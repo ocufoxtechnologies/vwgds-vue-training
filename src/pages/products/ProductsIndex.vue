@@ -6,10 +6,7 @@
     </div>
 
     <AddProduct
-      @add="
-        addProduct($event);
-        showAddForm = false;
-      "
+      @add="handleAddProduct($event)"
       @cancel="showAddForm = false"
       v-if="showAddForm"
     />
@@ -40,10 +37,20 @@
       </template>
 
       <template #col-data-end="{ rowIndex, rowData }">
-        <td>
+        <td class="space-x-4">
           <IconDelete
             @click="deleteProduct(rowIndex)"
-            class="cursor-pointer text-red-400 text-xs text-right"
+            class="cursor-pointer text-red-400 text-xs text-right inline-block"
+          />
+          <IconEdit
+            @click="
+              router.push({
+                name: ProductsEditRouteName,
+                params: { id: rowData.id },
+                query: rowData,
+              })
+            "
+            class="cursor-pointer inline-block text-green-400"
           />
         </td>
       </template>
@@ -57,11 +64,21 @@
 
 <script setup lang="ts">
 import IconDelete from "@/components/icons/IconDelete.vue";
+import IconEdit from "@/components/icons/IconEdit.vue";
 import AddProduct from "@/components/products/AddProduct.vue";
 import useProducts from "@/composables/useProducts";
 import { ref } from "vue";
+import { routeName as ProductsEditRouteName } from "./ProductsEdit.vue";
+import { useRouter } from "vue-router";
 
 const { addProduct, products, deleteProduct, isLoading } = useProducts();
+
+const router = useRouter();
+
+const handleAddProduct = async (data) => {
+  await addProduct(data);
+  showAddForm.value = false;
+};
 
 const showAddForm = ref(false);
 const tableConfig = ref([

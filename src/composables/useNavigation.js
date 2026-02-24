@@ -1,8 +1,8 @@
 import Dashboard from "@/pages/Dashboard.vue";
-import Products from "@/pages/Products.vue";
+import ProductsIndex from "@/pages/products/ProductsIndex.vue";
 import Batch from "@/pages/Batch.vue";
 import Inventory from "@/pages/Inventory.vue";
-import { computed, ref } from "vue";
+import ProductsEdit from "@/pages/products/ProductsEdit.vue";
 
 export const menus = [
   {
@@ -12,8 +12,14 @@ export const menus = [
   },
   {
     name: "Products",
-    component: Products,
+    component: ProductsIndex,
     path: "/products",
+  },
+  {
+    name: "ProductsEdit",
+    component: ProductsEdit,
+    path: "/products/:id",
+    sidebar: false,
   },
   {
     name: "Batch",

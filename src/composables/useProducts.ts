@@ -17,33 +17,45 @@ interface Product {
 const products = ref<Product[]>([]);
 const isLoading = ref(false);
 
-const fetchProducts = async () => {
-  const axios = inject<Axios>(axiosKey);
-  console.log(axios);
-  isLoading.value = true;
-  console.log("Fetchproducts called");
-  const response = await axios.get("/products");
-  products.value = response.data;
-  isLoading.value = false;
+const getProductById = (id) => {
+  return products.value.find((product) => product.id == id);
 };
 
 export default function () {
   const { getCategoryById, loaded: categoriesLoaded } = useCategories();
   const { getBrandById, loaded: brandsLoaded } = useBrands(null);
 
+  const axios = inject<Axios>(axiosKey);
+
+  const fetchProducts = async () => {
+    isLoading.value = true;
+    console.log("Fetchproducts called");
+    const response = await axios.get("/products");
+    products.value = response.data;
+    isLoading.value = false;
+  };
+
   onMounted(fetchProducts);
 
-  const addProduct = (product) => {
-    product.id = new Date().getTime();
-    products.value.push(product);
+  const addProduct = async (product) => {
+    console.log(axios);
+    product.id = new Date().getTime().toString();
+    const response = await axios.post("/products", product);
+    if (response.status == 201) {
+      products.value.push(product);
+      alert("Product Added");
+    }
   };
 
-  const getProductById = (id) => {
-    return products.value.find((product) => product.id == id);
-  };
-
-  const deleteProduct = (index) => {
-    products.value.splice(index, 1);
+  const deleteProduct = async (index) => {
+    const product = products.value[index];
+    try {
+      const response = await axios.delete(`/products/${product.id}`);
+      products.value.splice(index, 1);
+      alert("Product Delete");
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return {
@@ -62,4 +74,8 @@ export default function () {
     getProductById,
     deleteProduct,
   };
+}
+
+export function useProduct(id) {
+  return getProductById(id);
 }

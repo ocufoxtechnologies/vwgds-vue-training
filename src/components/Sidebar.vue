@@ -3,7 +3,7 @@
     <p class="text-2xl">Invento</p>
 
     <ul class="my-10 space-y-6 text-lg">
-      <li class="cursor-pointer" v-for="menu in menus">
+      <li class="cursor-pointer" v-for="menu in filteredMenu">
         <router-link :to="{ name: menu.name }">
           {{ menu.name }}
         </router-link>
@@ -13,7 +13,12 @@
 </template>
 
 <script setup>
+import { computed } from "vue";
 import useNavigation from "@/composables/useNavigation";
 
 const { navigate, menus } = useNavigation();
+
+const filteredMenu = computed(() =>
+  menus.filter((menu) => menu.sidebar !== false),
+);
 </script>

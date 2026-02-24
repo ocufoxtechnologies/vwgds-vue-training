@@ -7,7 +7,8 @@ const http = axios.create({
 
 http.interceptors.request.use((config) => {
   console.log("Request Interceptor called", config.url);
-  config.headers.Authorization = `Bearer asdasd`;
+  const token = localStorage.getItem("token");
+  config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
 
