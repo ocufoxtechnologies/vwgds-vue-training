@@ -47,11 +47,19 @@
               router.push({
                 name: ProductsEditRouteName,
                 params: { id: rowData.id },
-                query: rowData,
               })
             "
             class="cursor-pointer inline-block text-green-400"
           />
+
+          <router-link
+            :to="{
+              name: 'ProductView',
+              params: { id: rowData.id },
+            }"
+          >
+            <IconView class="cursor-pointer inline-block text-orange-400" />
+          </router-link>
         </td>
       </template>
     </BaseTable>
@@ -59,6 +67,9 @@
     <div v-else>
       <p class="text-3xl text-center">Loading</p>
     </div>
+
+    <router-view name="nestedSidebar" />
+    <router-view />
   </div>
 </template>
 
@@ -70,6 +81,7 @@ import useProducts from "@/composables/useProducts";
 import { ref } from "vue";
 import { routeName as ProductsEditRouteName } from "./ProductsEdit.vue";
 import { useRouter } from "vue-router";
+import IconView from "@/components/icons/IconView.vue";
 
 const { addProduct, products, deleteProduct, isLoading } = useProducts();
 

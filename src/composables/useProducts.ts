@@ -77,5 +77,15 @@ export default function () {
 }
 
 export function useProduct(id) {
-  return getProductById(id);
+  const axios = inject<Axios>(axiosKey);
+
+  const editProduct = async (product) => {
+    const response = await axios.put(`/products/${product.id}`, product);
+    alert("Product Edited");
+  };
+
+  return {
+    product: getProductById(id),
+    editProduct,
+  };
 }

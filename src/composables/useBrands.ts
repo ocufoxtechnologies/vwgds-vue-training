@@ -37,7 +37,7 @@ export default function (product) {
     brands: computed(() => {
       console.log("useBrands Computed called");
       if (!loaded.value) return [];
-      if (product?.value.category_id == null) return brands.value;
+      if (product.value?.category_id == null) return brands.value;
 
       return brands.value.filter((brand) =>
         brand.category_ids.includes(product.value.category_id),

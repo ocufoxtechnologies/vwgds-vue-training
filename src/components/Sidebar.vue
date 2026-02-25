@@ -1,24 +1,38 @@
 <template>
-  <div class="px-6 py-4">
-    <p class="text-2xl">Invento</p>
+  <p class="text-2xl">Invento</p>
 
-    <ul class="my-10 space-y-6 text-lg">
-      <li class="cursor-pointer" v-for="menu in filteredMenu">
-        <router-link :to="{ name: menu.name }">
-          {{ menu.name }}
-        </router-link>
-      </li>
-    </ul>
-  </div>
+  <ul class="my-10 space-y-6 text-lg flex-1">
+    <li class="cursor-pointer" v-for="menu in menus">
+      <router-link :to="{ name: menu.name }">
+        {{ menu.name }}
+      </router-link>
+    </li>
+  </ul>
+
+  <router-link to="/account">
+    <p class="text-lg">Account</p>
+  </router-link>
 </template>
 
 <script setup>
-import { computed } from "vue";
-import useNavigation from "@/composables/useNavigation";
+import { ref } from "vue";
 
-const { navigate, menus } = useNavigation();
-
-const filteredMenu = computed(() =>
-  menus.filter((menu) => menu.sidebar !== false),
-);
+const menus = ref([
+  {
+    name: "Dashboard",
+    path: "/",
+  },
+  {
+    name: "Products",
+    path: "/products",
+  },
+  {
+    name: "Batch",
+    path: "/batches",
+  },
+  {
+    name: "Inventory",
+    path: "/inventory",
+  },
+]);
 </script>
